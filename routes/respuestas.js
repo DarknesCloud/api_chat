@@ -5,11 +5,26 @@ const Respuesta = require('../models/Respuesta');
 // POST: Guardar respuesta
 router.post('/', async (req, res) => {
   try {
-    const nuevaRespuesta = new Respuesta(req.body);
-    const guardado = await nuevaRespuesta.save();
-    res.status(201).json(guardado);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const { id, respuesta } = req.body;
+
+    // Si no hay id, generamos uno (opcional)
+    const nuevoId = id || `anon-${Date.now()}`;
+
+    const nuevaRespuesta = new Respuesta({
+      id: nuevoId,
+      respuesta,
+    });
+
+    await nuevaRespuesta.save();
+    res.status(201).json(nuevaRespuesta);
+  } catch (error) {
+    console.error('Error al guardar la respuesta:', error.message);
+    res
+      .status(400)
+      .json({
+        error:
+          'El servidor respondió con un error. Verifica los parametros y/o la URL.',
+      });
   }
 });
 
