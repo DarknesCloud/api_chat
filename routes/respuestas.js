@@ -19,14 +19,14 @@ router.post('/', async (req, res) => {
     res.status(201).json(nuevaRespuesta);
   } catch (error) {
     console.error('Error al guardar la respuesta:', error.message);
-    res
-      .status(400)
-      .json({
-        error:
-          'El servidor respondió con un error. Verifica los parametros y/o la URL.',
-      });
+    res.status(400).json({
+      error:
+        'El servidor respondió con un error. Verifica los parametros y/o la URL.',
+    });
   }
 });
+
+//Comentario
 
 // GET: Obtener todas las respuestas
 router.get('/', async (req, res) => {
